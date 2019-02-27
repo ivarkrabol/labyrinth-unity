@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[ExecuteInEditMode]
 public class MoodWeightAxis : MoodWeight
 {
     public Axis axis;
