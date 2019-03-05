@@ -1,22 +1,31 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
 [RequireComponent(typeof(PostProcessVolume))]
 public abstract class MoodWeight : MonoBehaviour
 {
-    public GameObject cameraRig;
+    protected Vector3 CameraPosition;
+    private bool _usingEditorCamera;
 
-    private PostProcessVolume volume
+    private PostProcessVolume Volume => GetComponent<PostProcessVolume>();
+
+    public void OnRenderObject()
     {
-        get
+        if (!_usingEditorCamera && !Application.isPlaying)
         {
-            return GetComponent<PostProcessVolume>();
+            CameraPosition = SceneView.lastActiveSceneView.pivot;
+            _usingEditorCamera = true;
+        } else if (_usingEditorCamera && Camera.main != null)
+        {
+            CameraPosition = Camera.main.transform.position;
+            _usingEditorCamera = false;
         }
     }
 
     public void Update()
     {
-        volume.weight = Mathf.Clamp(GetWeight(), 0, 1);
+        Volume.weight = Mathf.Clamp(GetWeight(), 0, 1);
     }
 
     protected abstract float GetWeight();

@@ -4,69 +4,51 @@ public class CameraControls : MonoBehaviour
 {
     public float transitionDuration = .5f;
 
-    private int heading = 0;
-    private Vector2Int coordinates = new Vector2Int(0, 0);
+    private int _heading;
+    private Vector2Int _coordinates = new Vector2Int(0, 0);
 
-    private float transitionRemaining = 0f;
-    private int targetHeading = 0;
-    private Vector2Int targetCoordinates = Vector2Int.zero;
+    private float _transitionRemaining;
+    private int _targetHeading;
+    private Vector2Int _targetCoordinates = Vector2Int.zero;
 
-    private Vector3 targetEulerAngles
-    {
-        get
-        {
-            return EulerAnglesFromHeading(targetHeading);
-        }
-    }
+    private Vector3 TargetEulerAngles => EulerAnglesFromHeading(_targetHeading);
 
-    private Vector3 targetPosition
-    {
-        get
-        {
-            return PositionFromCoordinates(targetCoordinates);
-        }
-    }
+    private Vector3 TargetPosition => PositionFromCoordinates(_targetCoordinates);
 
-    // Start is called before the first frame update
-    public void Start()
-    {
-    }
-
-    // Update is called once per frame
     public void Update()
     {
-        if (transitionRemaining > 0)
+        if (_transitionRemaining > 0)
         {
-            if (transitionRemaining - Time.deltaTime <= 0)
+            if (_transitionRemaining - Time.deltaTime <= 0)
             {
-                heading = targetHeading;
-                coordinates = targetCoordinates;
-                transform.eulerAngles = EulerAnglesFromHeading(heading);
-                transform.position = PositionFromCoordinates(coordinates);
-                transitionRemaining = 0;
+                _heading = _targetHeading;
+                _coordinates = _targetCoordinates;
+                transform.eulerAngles = EulerAnglesFromHeading(_heading);
+                transform.position = PositionFromCoordinates(_coordinates);
+                _transitionRemaining = 0;
             }
             else
             {
-                float animateDelta = Time.deltaTime / transitionRemaining;
-                Vector3 eulerAnglesDiff = targetEulerAngles - transform.eulerAngles;
-                eulerAnglesDiff.y = ((eulerAnglesDiff.y + 540) % 360) - 180;
+                var animateDelta = Time.deltaTime / _transitionRemaining;
+                var eulerAnglesDiff = TargetEulerAngles - transform.eulerAngles;
+                eulerAnglesDiff.y = (eulerAnglesDiff.y + 540) % 360 - 180;
                 transform.eulerAngles += eulerAnglesDiff * animateDelta;
-                transform.position += (targetPosition - transform.position) * animateDelta;
-                transitionRemaining -= Time.deltaTime;
+                transform.position += (TargetPosition - transform.position) * animateDelta;
+                _transitionRemaining -= Time.deltaTime;
             }
         }
         else
         {
             if (Input.GetButtonDown("Horizontal"))
             {
-                targetHeading = GetNextHeading(heading, (int)Input.GetAxisRaw("Horizontal"));
-                transitionRemaining = transitionDuration;
+                _targetHeading = GetNextHeading(_heading, (int) Input.GetAxisRaw("Horizontal"));
+                _transitionRemaining = transitionDuration;
             }
 
             if (Input.GetButtonDown("Vertical"))
             {
-                targetCoordinates = GetNextCoordinates(coordinates, heading, (int)Input.GetAxisRaw("Vertical"));
-                transitionRemaining = transitionDuration;
+                _targetCoordinates = GetNextCoordinates(_coordinates, _heading, (int) Input.GetAxisRaw("Vertical"));
+                _transitionRemaining = transitionDuration;
             }
         }
     }
@@ -98,7 +80,8 @@ public class CameraControls : MonoBehaviour
                 return coordinates - Vector2Int.right * move;
             case 3:
                 return coordinates - Vector2Int.down * move;
+            default:
+                return coordinates;
         }
-        return coordinates;
     }
 }
