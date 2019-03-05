@@ -27,9 +27,9 @@ internal static class AxisMethods {
             case Axis.X:
                 return Vector3.right;
             case Axis.Y:
-                return Vector3.forward;
-            case Axis.Z:
                 return Vector3.up;
+            case Axis.Z:
+                return Vector3.forward;
             default:
                 return Vector3.zero;
         }

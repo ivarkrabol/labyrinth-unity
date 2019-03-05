@@ -1784,7 +1784,7 @@ MonoBehaviour:
   sharedProfile: {fileID: 11400000, guid: 7718817f889bc2a4fab8a0eb059918f9, type: 2}
   isGlobal: 1
   blendDistance: 0
-  weight: 0.37213585
+  weight: 0.38861662
   priority: 0
 --- !u!114 &1710030324
 MonoBehaviour:
@@ -1845,7 +1845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7176fc93ecf27414b9a1472a47e932af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: 1
+  axis: 2
   valueMin: -10
   valueMax: 20
 --- !u!114 &1732223034
@@ -1863,7 +1863,7 @@ MonoBehaviour:
   sharedProfile: {fileID: 11400000, guid: 00daa1cdb6593274b98c34a8bd233b98, type: 2}
   isGlobal: 1
   blendDistance: 0
-  weight: 0.52743655
+  weight: 0.38399985
   priority: 0
 --- !u!4 &1732223035
 Transform:
@@ -2091,7 +2091,7 @@ MonoBehaviour:
   sharedProfile: {fileID: 11400000, guid: 6d0da7f57c40d8d48a162f85d8f3d799, type: 2}
   isGlobal: 1
   blendDistance: 0
-  weight: 0.045279503
+  weight: 0
   priority: 0
 --- !u!4 &2116389307 stripped
 Transform:
