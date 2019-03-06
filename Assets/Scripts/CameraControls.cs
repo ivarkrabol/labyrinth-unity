@@ -5,7 +5,7 @@ public class CameraControls : MonoBehaviour
     public float transitionDuration = .5f;
 
     private int _heading;
-    private Vector2Int _coordinates = new Vector2Int(0, 0);
+    private Vector2Int _coordinates = new Vector2Int(1, 1);
 
     private float _transitionRemaining;
     private int _targetHeading;
@@ -60,7 +60,7 @@ public class CameraControls : MonoBehaviour
 
     private static Vector3 PositionFromCoordinates(Vector2 coordinates)
     {
-        return 10 * new Vector3(coordinates.x, 0, coordinates.y);
+        return 4 * new Vector3(coordinates.x, 0, coordinates.y);
     }
 
     private static int GetNextHeading(int heading, int rotate)
