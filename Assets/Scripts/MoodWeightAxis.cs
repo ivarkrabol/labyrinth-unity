@@ -6,11 +6,14 @@ public class MoodWeightAxis : MoodWeight
     public Axis axis;
     public float valueMin = -100;
     public float valueMax = 100;
+    public bool reverse = false;
 
     protected override float GetWeight()
     {
         var position = Vector3.Dot(CameraPosition, axis.GetUnitVector());
-        return (position - valueMin) / (valueMax - valueMin);
+        var weight = (position - valueMin) / (valueMax - valueMin);
+        if (reverse) return 1 - weight;
+        return weight;
     }
 }
 

@@ -1,0 +1,4 @@
+class TextureMoodImpl : TextureMood
+{
+    
+}
