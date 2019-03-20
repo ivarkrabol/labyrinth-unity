@@ -5,10 +5,12 @@ public class Instantiation : MonoBehaviour
     public Transform wall;
     public Transform floor;
 
+    public CombinedMaze maze;
+
     void Start() 
     {
-        var maze = new CombinedMaze(11,11, 3, 3);
-
+        maze = new CombinedMaze(11,11, 3, 3);
+        Debug.Log("instantiated");
         var matrix = maze.GetNumericalMatrix();
 
         var width = matrix.GetLength(0);

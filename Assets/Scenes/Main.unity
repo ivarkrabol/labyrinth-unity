@@ -38,7 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
+<<<<<<< HEAD
   m_IndirectSpecularColor: {r: 0.20773786, g: 0.22502875, b: 0.34163004, a: 1}
+=======
+  m_IndirectSpecularColor: {r: 0.17991464, g: 0.22526622, b: 0.30668363, a: 1}
+>>>>>>> Errored version
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -503,7 +507,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &337409493
 Transform:
   m_ObjectHideFlags: 0
@@ -973,7 +977,7 @@ Transform:
   - {fileID: 2101604884}
   - {fileID: 1219549825}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &642022616
 PrefabInstance:
