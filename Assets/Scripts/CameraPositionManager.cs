@@ -12,6 +12,7 @@ public class CameraPositionManager : MonoBehaviour
     private void Start()
     {
         _mainCamera = Camera.main;
+        _mainCamera.fieldOfView = 100f;
     }
 
     public void OnRenderObject()

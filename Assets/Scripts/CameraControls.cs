@@ -21,14 +21,19 @@ public class CameraControls : MonoBehaviour
     public void Start()
     {
         maze = GameObject.Find("Maze").GetComponent<Instantiation>().maze.GetNumericalMatrix();
-        Debug.Log(maze[0,0]);
 
     }
 
     public void Update()
     {
-        /*Debug.Log(Direction()[0]);
-        Debug.Log(Direction()[1]);*/
+        var debugString = string.Format("f:{0}, l:{1}, r:{2}, h: {3}", Options()["f"], Options()["l"], Options()["r"], _heading);
+        var debugString2 = string.Format("f:{0}, l:{1}, r:{2}", Direction()["f"], Direction()["l"], Direction()["r"]);
+        var debugString3 = string.Format("x:{0}, z:{1}", autoDirections[_heading]["f"][0], autoDirections[_heading]["f"][1]);
+   
+        Debug.Log(debugString);
+        Debug.Log(debugString2);
+        Debug.Log(debugString3);
+        Debug.Log(HasOptions());
         if (_transitionRemaining > 0)
         {
             if (_transitionRemaining - Time.deltaTime <= 0)
@@ -38,8 +43,6 @@ public class CameraControls : MonoBehaviour
                 transform.eulerAngles = EulerAnglesFromHeading(_heading);
                 transform.position = PositionFromCoordinates(_coordinates);
                 _transitionRemaining = 0;
-                /*var debugString = string.Format("f:{0}, l:{1}, r:{2}, h: {3}", Options()["f"], Options()["l"], Options()["r"], _heading);
-                Debug.Log(debugString);*/
             }
             else
             {
@@ -52,35 +55,37 @@ public class CameraControls : MonoBehaviour
             }
         }
         else if(!HasOptions()) {
-            Debug.Log(autoDirections[_heading]["f"][0]);
-            Debug.Log(Direction()[0]);
-            Debug.Log(autoDirections[_heading]["f"][1]);
-            Debug.Log(Direction()[1]);
-            if(autoDirections[_heading]["f"] == Direction()) {
+            if(Direction()["f"]) {
                 
                 Debug.Log("forward");
-                var nextCoord = GetNextCoordinates(_coordinates, _heading, (int) Input.GetAxisRaw("Vertical"));
+                int forward;
+                var nextCoord =GetNextCoordinates(_coordinates, _heading, 1);
                 if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
                     _targetCoordinates = nextCoord;
                     _transitionRemaining = transitionDuration;
                 }
             } else {
-                Debug.Log("happens");
-                var heading = 1;
-                if(autoDirections[_heading]["l"] == Direction()) {
-                    Debug.Log("left");
-                    heading = -1;
-                } else if (autoDirections[_heading]["r"] == Direction()) {
-                    Debug.Log("right");
-                    heading = 1;
-                };
-                var nextCoord = GetNextCoordinates(_coordinates, _heading, (int) Input.GetAxisRaw("Vertical"));
-                if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
-                    _targetCoordinates = nextCoord;
+                if(Direction()["r"]) {
+                    _targetHeading = GetNextHeading(_heading, 1);
+                    _transitionRemaining = transitionDuration;
+                    var nextCoord = GetNextCoordinates(_coordinates, _heading, 1);
+                    if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
+                        _targetCoordinates = nextCoord;
+                        _transitionRemaining = transitionDuration;
+                    }
+                } else if(Direction()["l"]) {
+                    _targetHeading = GetNextHeading(_heading, -1);
+                    _transitionRemaining = transitionDuration;
+                    var nextCoord = GetNextCoordinates(_coordinates, _heading, 1);
+                    if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
+                        _targetCoordinates = nextCoord;
+                        _transitionRemaining = transitionDuration;
+                    }
+                } else {
+                    _targetHeading = GetNextHeading(GetNextHeading(_heading, 1), 1);
                     _transitionRemaining = transitionDuration;
                 }
-                _targetHeading = GetNextHeading(_heading, heading);
-                _transitionRemaining = transitionDuration;
+                
             }
         } 
         else
@@ -89,6 +94,11 @@ public class CameraControls : MonoBehaviour
             {
                 _targetHeading = GetNextHeading(_heading, (int) Input.GetAxisRaw("Horizontal"));
                 _transitionRemaining = transitionDuration;
+                var nextCoord = GetNextCoordinates(_coordinates, _heading, 1);
+                if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
+                    _targetCoordinates = nextCoord;
+                    _transitionRemaining = transitionDuration;
+                }
             }
 
             if (Input.GetButton("Vertical"))
@@ -111,21 +121,18 @@ public class CameraControls : MonoBehaviour
     };
 
     private Dictionary<string, int[]>[] autoDirections = new Dictionary<string, int[]>[]{
-        new Dictionary<string, int[]>(){{"f", new int[]{1, 0}}, {"l", new int[]{0, 1}},{"r", new int[]{0, -1}} },
-        new Dictionary<string, int[]>(){{"f", new int[]{0, -1}}, {"l", new int[]{1, 0}},{"r", new int[]{-1, 0}} },
-        new Dictionary<string, int[]>(){{"f", new int[]{-1, 0}}, {"l", new int[]{0, -1}},{"r", new int[]{0, 1}} },
-        new Dictionary<string, int[]>(){{"f", new int[]{0, 1}}, {"l", new int[]{-1, 0}},{"r", new int[]{1, 0}} },
+        new Dictionary<string, int[]>(){{"f", new int[]{2, 0}}, {"l", new int[]{1, 1}},{"r", new int[]{1, -1}} },
+        new Dictionary<string, int[]>(){{"f", new int[]{0, -2}}, {"l", new int[]{1, -1}},{"r", new int[]{-1, -1}} },
+        new Dictionary<string, int[]>(){{"f", new int[]{-2, 0}}, {"l", new int[]{-1, -1}},{"r", new int[]{-1, 1}} },
+        new Dictionary<string, int[]>(){{"f", new int[]{0, 2}}, {"l", new int[]{-1, 1}},{"r", new int[]{1, 1}} },
     };
 
-    private int[] Direction() {
-        var direction = new int[2];
+    private Dictionary<string, bool> Direction() {
+        var direction = new Dictionary<string, bool>();
         var directionOptions = autoDirections[_heading];
         foreach (KeyValuePair<string, int[]> item in directionOptions)
         {
-            if(maze[_coordinates.x + item.Value[0] + 1, _coordinates.y + item.Value[1] + 1] != 1) {
-                direction[0] = item.Value[0];
-                direction[1] = item.Value[1];
-            }
+            direction.Add(item.Key, maze[_coordinates.x + item.Value[0] + 1, _coordinates.y + item.Value[1] + 1] != 1);
         }
         return direction;
     }
@@ -150,7 +157,12 @@ public class CameraControls : MonoBehaviour
         {
             /*var debugString = string.Format("Cord: (x:{0}, y: {1}), Options: (x:{2}, y:{3}), Key: {4}",_coordinates.x, _coordinates.y, _coordinates.x + item.Value[0], _coordinates.y + item.Value[1], item.Key);
             Debug.Log(debugString);*/
-            //options.Add(item.Key, maze[_coordinates.x + item.Value[0] + 1, _coordinates.y + item.Value[1] + 1] != 1);
+            if(_coordinates.x + item.Value[0] + 1 < 0 || _coordinates.y + item.Value[1] + 1 < 0 ) {
+                options.Add(item.Key, false);
+            }else {
+                options.Add(item.Key, maze[_coordinates.x + item.Value[0] + 1, _coordinates.y + item.Value[1] + 1] != 1);
+            }
+           
         }
         return options;
     }
@@ -162,7 +174,7 @@ public class CameraControls : MonoBehaviour
 
     private static Vector3 PositionFromCoordinates(Vector2 coordinates)
     {
-        return 4 * new Vector3(coordinates.x, 0, coordinates.y);
+        return 3 * new Vector3(coordinates.x, 0, coordinates.y);
     }
 
     private static int GetNextHeading(int heading, int rotate)

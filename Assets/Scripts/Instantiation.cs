@@ -15,6 +15,8 @@ public class Instantiation : MonoBehaviour
 
         var width = matrix.GetLength(0);
         var height = matrix.GetLength(1);
+        
+        int size = 3;
 
         for (int x = 0; x < width; x++)
         {
@@ -22,9 +24,9 @@ public class Instantiation : MonoBehaviour
             {
                 if(matrix[x,z] == 1)
                 {
-                    Instantiate(wall, new Vector3(x*4 - 4, 0, z*4 - 4), Quaternion.identity);
+                    Instantiate(wall, new Vector3(x*size - size, 0, z*size - size), Quaternion.identity);
                 } else {
-                    Instantiate(floor, new Vector3(x*4 - 4, 0, z*4 - 4), Quaternion.identity);
+                    Instantiate(floor, new Vector3(x*size - size, 0, z*size - size), Quaternion.identity);
                 }
                 
             }
