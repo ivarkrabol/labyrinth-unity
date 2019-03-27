@@ -21,6 +21,7 @@ public class CameraControls : MonoBehaviour
     public void Start()
     {
         maze = GameObject.Find("Maze").GetComponent<Instantiation>().maze.GetNumericalMatrix();
+        Debug.Log(maze);
 
     }
 
