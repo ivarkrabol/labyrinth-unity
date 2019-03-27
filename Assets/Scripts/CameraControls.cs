@@ -93,22 +93,28 @@ public class CameraControls : MonoBehaviour
         {
             if (Input.GetButton("Horizontal"))
             {
-                _targetHeading = GetNextHeading(_heading, (int) Input.GetAxisRaw("Horizontal"));
-                _transitionRemaining = transitionDuration;
-                var nextCoord = GetNextCoordinates(_coordinates, _heading, 1);
-                if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
+                if((Options()["r"] && (Input.GetAxisRaw("Horizontal") == 1)) || (Options()["l"] && (Input.GetAxisRaw("Horizontal") == -1))) {
+                    _targetHeading = GetNextHeading(_heading, (int) Input.GetAxisRaw("Horizontal"));
+                    _transitionRemaining = transitionDuration;
+                    var nextCoord = GetNextCoordinates(_coordinates, _heading, 1);
+                    if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
                     _targetCoordinates = nextCoord;
                     _transitionRemaining = transitionDuration;
                 }
+                }
+                
             }
 
             if (Input.GetButton("Vertical"))
             {
-                var nextCoord = GetNextCoordinates(_coordinates, _heading, (int) Input.GetAxisRaw("Vertical"));
-                if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
+                if(Options()["f"] && (Input.GetAxisRaw("Vertical") == 1)) {
+                    var nextCoord = GetNextCoordinates(_coordinates, _heading, (int) Input.GetAxisRaw("Vertical"));
+                    if((maze[nextCoord.x + 1, nextCoord.y + 1]) != 1){
                     _targetCoordinates = nextCoord;
                     _transitionRemaining = transitionDuration;
                 }
+                }
+                
                 
             }
         }

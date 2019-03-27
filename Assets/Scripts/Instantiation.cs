@@ -9,7 +9,7 @@ public class Instantiation : MonoBehaviour
 
     void Start() 
     {
-        maze = new CombinedMaze(11,11, 3, 3);
+        maze = new CombinedMaze(7,7, 3, 3);
         Debug.Log("instantiated");
         var matrix = maze.GetNumericalMatrix();
 
