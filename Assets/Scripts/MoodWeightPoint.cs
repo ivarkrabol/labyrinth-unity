@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode]
 public class MoodWeightPoint : MoodWeight
 {
     public Vector3 point;

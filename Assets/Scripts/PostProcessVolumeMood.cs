@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
 [RequireComponent(typeof(PostProcessVolume))]
-class PostProcessVolumeMood : Mood
+public class PostProcessVolumeMood : Mood
 {
     public PostProcessVolumeMood()
     {

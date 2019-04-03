@@ -2,26 +2,24 @@ using UnityEngine;
 
 public class MaterialPair
 {
-    private const int Steps = 24;
-
     private readonly Material[] _blends;
     private readonly int[] _texturePropertyNameIds;
 
-    public MaterialPair(Material material1, Material material2)
+    public MaterialPair(Material material1, Material material2, int steps)
     {
-        _blends = new Material[Steps];
+        _blends = new Material[steps];
         _blends[0] = material1;
-        _blends[Steps - 1] = material2;
+        _blends[steps - 1] = material2;
 
         _texturePropertyNameIds = material1.GetTexturePropertyNameIDs();
         
 
-        for (var i = 1; i < Steps - 1; i++)
+        for (var i = 1; i < steps - 1; i++)
         {
             _blends[i] = BlendMaterials(
                 material1,
                 material2,
-                (float)i / (Steps - 1)
+                (float)i / (steps - 1)
             );
         }
     }
@@ -61,9 +59,10 @@ public class MaterialPair
 
     public Material GetBlend(float amount)
     {
-        var index = Mathf.FloorToInt(amount * Steps);
+        var steps = _blends.Length;
+        var index = Mathf.FloorToInt(amount * steps);
         if (index < 0) index = 0;
-        if (index >= Steps) index = Steps - 1;
+        if (index >= steps) index = steps - 1;
         return _blends[index];
     }
 }
