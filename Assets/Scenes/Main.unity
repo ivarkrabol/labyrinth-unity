@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e16f9c76b52daa24fa04417cb6820078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionDuration: 0.2
+  transitionDuration: 0.4
 --- !u!4 &587491153
 Transform:
   m_ObjectHideFlags: 0
@@ -480,7 +480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &629276525
 Transform:
   m_ObjectHideFlags: 0
@@ -532,6 +532,7 @@ MonoBehaviour:
   tileSize: 3
   mazeWidth: 7
   mazeHeight: 7
+  seed: 240
   wall: {fileID: 2117428790258015301, guid: 221ce27a2d643bb649694d5dd528f301, type: 3}
   floor: {fileID: 7622832408741010159, guid: fed4c0a5f305cd6bd8af16935e590836, type: 3}
 --- !u!4 &707265051
@@ -699,8 +700,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8fb07d292be4a674697fe307adb87a06, type: 2}
   - {fileID: 2100000, guid: d6b10d3b3a91ea7458a4c688fed2219a, type: 2}
   blendRatio: 0.5
-  blendSteps: 15
-  center: {x: 60, y: 0, z: 60}
+  blendSteps: 30
 --- !u!4 &1092848556
 Transform:
   m_ObjectHideFlags: 0

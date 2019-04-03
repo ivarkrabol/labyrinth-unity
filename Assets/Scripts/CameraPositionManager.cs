@@ -17,10 +17,8 @@ public class CameraPositionManager : MonoBehaviour
         _mainCamera.fieldOfView = 100f;
     }
 
-    public void OnRenderObject()
+    public void Update()
     {
-        CameraPosition = !Application.isPlaying 
-            ? SceneView.lastActiveSceneView.pivot 
-            : _mainCamera.transform.position;
+        CameraPosition = _mainCamera.transform.position;
     }
 }

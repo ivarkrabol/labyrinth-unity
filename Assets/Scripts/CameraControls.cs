@@ -24,18 +24,13 @@ public class CameraControls : MonoBehaviour
     {
         var mazeInstantiation = GameObject.Find("Maze").GetComponent<Instantiation>();
         _maze = mazeInstantiation.maze.GetNumericalMatrix();
-//        Debug.Log(_maze);
         _tileSize = mazeInstantiation.tileSize;
-        _targetCoordinates = _coordinates = new Vector2Int(2, 2)
-                                            * 14 + new Vector2Int(7, 7);
+        _targetCoordinates = _coordinates = new Vector2Int(0, 2) * 14 + new Vector2Int(6, 6);
+        _transitionRemaining = .1f;
     }
 
     public void Update()
     {
-//        Debug.Log($"f:{Options()["f"]}, l:{Options()["l"]}, r:{Options()["r"]}, h: {_heading}");
-//        Debug.Log($"f:{Direction()["f"]}, l:{Direction()["l"]}, r:{Direction()["r"]}");
-//        Debug.Log($"x:{_autoDirections[_heading]["f"][0]}, z:{_autoDirections[_heading]["f"][1]}");
-//        Debug.Log($"has options: {HasOptions()}");
         if (_transitionRemaining > 0)
         {
             if (_transitionRemaining - Time.deltaTime <= 0)
@@ -65,7 +60,6 @@ public class CameraControls : MonoBehaviour
         {
             if (Direction()["f"])
             {
-//                Debug.Log("forward");
                 var nextCoord = GetNextCoordinates(_coordinates, _heading, 1);
                 if (_maze[nextCoord.x + 1, nextCoord.y + 1] == 1) return;
                 _targetCoordinates = nextCoord;
@@ -179,9 +173,6 @@ public class CameraControls : MonoBehaviour
         var directionOptions = _choiceDirections[_heading];
         foreach (var item in directionOptions)
         {
-            /*Debug.Log($"Coord: (x:{_coordinates.x}, y: {_coordinates.y}), " +
-                      $"Options: (x:{_coordinates.x + item.Value[0]}, y:{_coordinates.y + item.Value[1]}), " +
-                      $"Key: {item.Key}");*/
             if (_coordinates.x + item.Value[0] + 1 < 0 || _coordinates.y + item.Value[1] + 1 < 0)
             {
                 options.Add(item.Key, false);

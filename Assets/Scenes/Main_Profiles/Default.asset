@@ -55,8 +55,8 @@ MonoBehaviour:
     overrideState: 0
     value: {r: 1, g: 0, b: 0, a: 1}
   fastMode:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   dirtTexture:
     overrideState: 0
     value: {fileID: 0}
@@ -115,11 +115,11 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   shutterAngle:
-    overrideState: 1
+    overrideState: 0
     value: 270
   sampleCount:
     overrideState: 1
-    value: 32
+    value: 8
 --- !u!114 &114863761850979246
 MonoBehaviour:
   m_ObjectHideFlags: 3

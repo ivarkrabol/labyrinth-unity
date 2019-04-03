@@ -53,7 +53,7 @@ public class SingleMaze
     private readonly Random _rng;
     private int[,] _matrix;
 
-    public SingleMaze(int width, int height)
+    public SingleMaze(int width, int height, int seed)
     {
         _width = width;
         _height = height;
@@ -61,7 +61,7 @@ public class SingleMaze
         for (var x = 0; x < width; x++)
         for (var y = 0; y < height; y++)
             _cells[x, y] = CellState.Initial;
-        _rng = new Random();
+        _rng = new Random(seed);
         VisitCell(_rng.Next(width), _rng.Next(height));
         ToNumericalMatrix();
     }
@@ -177,7 +177,7 @@ public class CombinedMaze
 
     private readonly int[,] _combinedMatrix;
 
-    public CombinedMaze(int mazeWidth, int mazeHeight, int numberOfMazesX, int numberOfMazesY)
+    public CombinedMaze(int mazeWidth, int mazeHeight, int numberOfMazesX, int numberOfMazesY, int seed)
     {
         _mazeWidth = mazeWidth;
         _mazeHeight = mazeHeight;
@@ -188,13 +188,17 @@ public class CombinedMaze
         {
             for (var y = 0; y < numberOfMazesY; y += 1)
             {
-                _mazes[x, y] = new SingleMaze(mazeWidth, mazeHeight);
+                _mazes[x, y] = new SingleMaze(mazeWidth, mazeHeight, seed);
+                seed += numberOfMazesX * numberOfMazesY + 1;
             }
         }
 
         _combinedMatrix = new int[mazeWidth * numberOfMazesX * 2 + 1, mazeHeight * numberOfMazesY * 2 + 1];
         CombineMazes();
         AddConnections();
+
+        _combinedMatrix[7, 28] = 1;
+        _combinedMatrix[35, 14] = 1;
     }
 
     private void CombineMazes()

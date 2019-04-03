@@ -6,7 +6,6 @@ public class SkyboxManager : MonoBehaviour
     public Material[] skyboxCycle = new Material[8];
     public float blendRatio = 0.2f;
     public int blendSteps = 20;
-    public Vector3 center = new Vector3(60, 0, 60);
 
     private MaterialPair[] _pairs;
 
@@ -45,7 +44,6 @@ public class SkyboxManager : MonoBehaviour
         var pos = CameraPositionManager.CameraPosition;
         pos.y = 0;
         var cyclePosition = GetCyclePosition(pos);
-        Debug.Log($"real pos: {pos}; cycle pos: {cyclePosition}");
         RenderSettings.skybox = GetMaterial(cyclePosition);
     }
 
@@ -72,7 +70,6 @@ public class SkyboxManager : MonoBehaviour
         var prevIndex = (nextIndex + 7) % 8;
         var distPrev = Vector3.Distance(pos, Transitions[prevIndex]) / (14f * blendRatio);
         var distNext = Vector3.Distance(pos, Transitions[nextIndex]) / (14f * blendRatio);
-        Debug.Log($"prev: {distPrev}; next: {distNext}"); 
         return distPrev < distNext
             ? prevIndex + .5f * (1f + Mathf.Clamp(distPrev, 0f, 1f))
             : nextIndex + .5f * (1f - Mathf.Clamp(distNext, 0f, 1f));
@@ -80,13 +77,11 @@ public class SkyboxManager : MonoBehaviour
 
     private Material GetMaterial(float cyclePosition)
     {
-//        var cyclePosition = angle * _pairs.Length / 360f;
         while (cyclePosition < 0) cyclePosition += _pairs.Length;
         while (cyclePosition >= _pairs.Length) cyclePosition -= _pairs.Length;
         var index = (int) cyclePosition;
         if (Math.Abs(blendRatio) < 0.001) return _pairs[index].GetBlend(cyclePosition - index > 0.5f ? 1 : 0);
         var blendAmount = (cyclePosition - index - 0.5f * (1 - blendRatio)) / blendRatio;
-//        Debug.Log($"angle: {angle}, index: {index}, amount: {blendAmount}");
         return _pairs[index].GetBlend(blendAmount);
     }
 }

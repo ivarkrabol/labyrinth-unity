@@ -6,19 +6,17 @@ public class Instantiation : MonoBehaviour
     public int mazeWidth = 7;
     public int mazeHeight = 7;
 
+    public int seed;
+
     public Transform wall;
     public Transform floor;
 
     public CombinedMaze maze;
 
-    public Instantiation()
-    {
-        // We use x and z here, and x and y in Maze.cs (just a reminder)
-        maze = new CombinedMaze(mazeWidth, mazeHeight, Mood.NumberOfMoodsX, Mood.NumberOfMoodsY);
-    }
-
     private void Start()
     {
+        // We use x and z here, and x and y in Maze.cs (just a reminder)
+        maze = new CombinedMaze(mazeWidth, mazeHeight, Mood.NumberOfMoodsX, Mood.NumberOfMoodsY, seed);
         var matrix = maze.GetNumericalMatrix();
 
         var width = matrix.GetLength(0);
