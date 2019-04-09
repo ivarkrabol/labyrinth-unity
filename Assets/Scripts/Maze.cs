@@ -197,8 +197,8 @@ public class CombinedMaze
         CombineMazes();
         AddConnections();
 
-        _combinedMatrix[7, 28] = 1;
-        _combinedMatrix[35, 14] = 1;
+//        _combinedMatrix[7, 28] = 1;
+//        _combinedMatrix[35, 14] = 1;
     }
 
     private void CombineMazes()

@@ -21,7 +21,7 @@ public class TrippyMaterial
 
     public TrippyMaterial()
     {
-        _texture = new Texture2D(200, 200);
+        _texture = new Texture2D(100, 100);
         Material = new Material(Shader.Find("Standard")) {mainTexture = _texture};
         Trippy.Instance = this;
     }
@@ -29,11 +29,11 @@ public class TrippyMaterial
     public void Update()
     {
         var t = .04 * Time.fixedTime + .2;
-        for (var y = 0; y < 200; y++)
+        for (var y = 0; y < 100; y++)
         {
-            for (var x = 0; x < 200; x++)
+            for (var x = 0; x < 100; x++)
             {
-                var level = (float) (.2 * t + Bar(1.01f * x - 100, 1.01f * y - 100, t)) % 1.0f;
+                var level = (float) (.5 * t + Foo(1.01f * x - 50, 1.01f * y - 50, t)) % 1.0f;
                 _texture.SetPixel(x, y, Color.HSVToRGB(level, 1, 1));
             }
         }

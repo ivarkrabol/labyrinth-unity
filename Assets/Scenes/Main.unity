@@ -532,7 +532,7 @@ MonoBehaviour:
   tileSize: 3
   mazeWidth: 7
   mazeHeight: 7
-  seed: 240
+  seed: 123
   wall: {fileID: 2117428790258015301, guid: 221ce27a2d643bb649694d5dd528f301, type: 3}
   floor: {fileID: 7622832408741010159, guid: fed4c0a5f305cd6bd8af16935e590836, type: 3}
 --- !u!4 &707265051
@@ -700,7 +700,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8fb07d292be4a674697fe307adb87a06, type: 2}
   - {fileID: 2100000, guid: d6b10d3b3a91ea7458a4c688fed2219a, type: 2}
   blendRatio: 0.5
-  blendSteps: 30
+  blendSteps: 4
 --- !u!4 &1092848556
 Transform:
   m_ObjectHideFlags: 0

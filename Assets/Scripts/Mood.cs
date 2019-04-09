@@ -28,20 +28,19 @@ public class MoodProfile
 
     private static void InitProfiles()
     {
-        var defaultWall = LoadWall("Wall");
+        var defaultWall = LoadWall("Brick");
         var defaultFloor = LoadFloor("Floor");
 
         _profiles = new MoodProfile[3, 3];
 
         // Dramatic
         _profiles[0, 0] = new MoodProfile(
-            defaultWall,
-            defaultFloor
+            LoadWall("Forest"),
+            LoadFloor("Grass 2")
         );
 
         // Concrete
         _profiles[0, 1] = new MoodProfile(
-            
             LoadWall("Hedge"),
             LoadFloor("Sand")
         );
@@ -54,8 +53,8 @@ public class MoodProfile
 
         // Scary
         _profiles[1, 0] = new MoodProfile(
-            defaultWall,
-            defaultFloor
+            LoadWall("Tree"),
+            LoadFloor("Blood")
         );
 
         // Neutral
@@ -67,13 +66,13 @@ public class MoodProfile
         // Merry
         _profiles[1, 2] = new MoodProfile(
             LoadWall("ButterfliesAndBubbles"),
-            LoadFloor("Daisies")
+            LoadFloor("Grass")
         );
 
         // Glitchy
         _profiles[2, 0] = new MoodProfile(
-            defaultWall,
-            defaultFloor
+            LoadWall("Faces"),
+            LoadFloor("Brown")
         );
 
         // Abstract
