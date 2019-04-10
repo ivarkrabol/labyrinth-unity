@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.Networking;
+using System.Text;
 
 public class CameraControls : MonoBehaviour
 {
@@ -31,8 +34,10 @@ public class CameraControls : MonoBehaviour
 
     public void Update()
     {
+        SendLocation();
         if (_transitionRemaining > 0)
         {
+            
             if (_transitionRemaining - Time.deltaTime <= 0)
             {
                 _heading = _targetHeading;
@@ -218,5 +223,41 @@ public class CameraControls : MonoBehaviour
             default:
                 return coordinates;
         }
+    }
+
+    public void SendLocation() {
+
+
+        
+        float x = calculatePosition(_coordinates.x);
+        float y = calculatePosition(_coordinates.y);
+        string temp = "{\"x\":" + x.ToString() + ", \"y\":" + y.ToString() + "}";
+        Debug.Log(temp);
+        StartCoroutine(Send("http://eit3014.jowies.com/location", temp));
+    }
+
+    public float calculatePosition(int pos) {
+        return (float)pos/(float)40.0;
+    }
+
+    public IEnumerator Send(string url, string json)
+    {
+     var uwr = new UnityWebRequest(url, "POST");
+     byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+     uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+     uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+     uwr.SetRequestHeader("Content-Type", "application/json");
+
+     //Send the request then wait here until it returns
+     yield return uwr.SendWebRequest();
+
+     if (uwr.isNetworkError)
+         {
+             Debug.Log("Error While Sending: " + uwr.error);
+         }
+     else
+         {
+             Debug.Log("Received: " + uwr.downloadHandler.text);
+         }
     }
 }
