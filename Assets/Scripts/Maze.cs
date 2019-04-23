@@ -39,10 +39,10 @@ public class SingleMaze {
     private readonly Random _rng;
     private int[, ] _matrix;
 
-    public SingleMaze (int width, int height) {
+    public SingleMaze (int width, int height, int seed) {
         _width = width;
         _height = height;
-        _rng = new Random ();
+        _rng = new Random (seed);
 
         _subsets = new List<Subset> ();
         _checked = new List<Wall> ();
@@ -191,9 +191,10 @@ public class CombinedMaze {
         _numberOfMazesX = numberOfMazesX;
         _numberOfMazesY = numberOfMazesY;
         _mazes = new SingleMaze[numberOfMazesX, numberOfMazesY];
+        var rng = new Random(seed);
         for (var x = 0; x < numberOfMazesX; x += 1) {
             for (var y = 0; y < numberOfMazesY; y += 1) {
-                _mazes[x, y] = new SingleMaze (mazeWidth, mazeHeight);
+                _mazes[x, y] = new SingleMaze (mazeWidth, mazeHeight, rng.Next());
             }
         }
 

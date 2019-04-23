@@ -8,6 +8,7 @@ using System.Text;
 public class CameraControls : MonoBehaviour
 {
     public float transitionDuration = .5f;
+    public Vector2Int startingRegion;
 
     private int _heading;
     private Vector2Int _coordinates = new Vector2Int(1, 1);
@@ -28,7 +29,7 @@ public class CameraControls : MonoBehaviour
         var mazeInstantiation = GameObject.Find("Maze").GetComponent<Instantiation>();
         _maze = mazeInstantiation.maze.GetNumericalMatrix();
         _tileSize = mazeInstantiation.tileSize;
-        _targetCoordinates = _coordinates = new Vector2Int(0, 2) * 14 + new Vector2Int(6, 6);
+        _targetCoordinates = _coordinates = startingRegion * 14 + new Vector2Int(6, 6);
         _transitionRemaining = .1f;
     }
 

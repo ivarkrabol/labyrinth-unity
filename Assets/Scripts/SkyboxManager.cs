@@ -5,7 +5,7 @@ public class SkyboxManager : MonoBehaviour
 {
     public Material[] skyboxCycle = new Material[8];
     public float blendRatio = 0.2f;
-    public int blendSteps = 20;
+    public int devBlendSteps = 20;
 
     private MaterialPair[] _pairs;
 
@@ -34,7 +34,7 @@ public class SkyboxManager : MonoBehaviour
             _pairs[i] = new MaterialPair(
                 skyboxCycle[i],
                 skyboxCycle[(i + 1) % skyboxCycle.Length],
-                blendSteps
+                Debug.isDebugBuild ? devBlendSteps : 25
             );
         }
     }
